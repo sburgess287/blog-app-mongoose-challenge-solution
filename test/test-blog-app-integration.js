@@ -12,3 +12,6 @@ const {BlogPost} = require('../models');
 const {app, runServer, closeServer} = require('../server.js');
 const {TEST_DATABASE_URL} = require('../config.js');
 
+chai.use(chaiHttp);
+
+// Seed the database using Faker library
