@@ -4,6 +4,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const faker = require('faker');
 const mongoose = require('mongoose');
+//const mongodb = require('mongodb');
+// https://www.npmjs.com/package/mongodb
 
 // make expect syntax available throughout module
 const expect = chai.expect;
@@ -19,10 +21,11 @@ function seedBlogpostData(){
     console.info('seeding blogpost data');
     const seedData = [];
     for (let i=1; i<= 5; i++){
-        seedData.push(generateBlogpostData);
+        seedData.push(generateBlogpostData()); // call the function sarah
     }
     // return promise
     return BlogPost.insertMany(seedData);
+    // return mongodb.collection('blogposts').insertMany(seedData);
 }
 
 // generate data to put into database
@@ -38,11 +41,11 @@ function generateAuthorName(){
 // can be used to generate seed data for db or request.body data
 function generateBlogpostData(){
     return {
-        title: faker.random.catch_phrase_noun.blogTitle(), 
+        title: faker.lorem.words(), 
         author: generateAuthorName(),
-        content: faker.lorem.sentence.blogContent(),
+        content: faker.lorem.text(),
         comments: {
-            content: faker.lorem.words.blogComment()
+            content: faker.lorem.sentences()
         }
 
     }
@@ -88,11 +91,11 @@ describe('Blogposts API resource', function() {
                     blog = _blog;
                     expect(blog).to.have.status(200);
                     //verify db of posts is more than 1
-                    expect(blog.body.blogposts).to.have.lengthOf.at.least(1);
+                    expect(blog.body).to.have.lengthOf.at.least(1);
                     return BlogPost.count();
                 })
                 .then(function(count) {
-                    expect(blog.body.blogposts).to.have.lengthOf(count);
+                    expect(blog.body).to.have.lengthOf(count);
                 });
         });
     });
