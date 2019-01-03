@@ -34,7 +34,7 @@ function generateAuthorName(){
 }
 
 
-// generate object representing a blog-post
+// generate object representing a blogpost
 // can be used to generate seed data for db or request.body data
 function generateBlogpostData(){
     return {
@@ -54,4 +54,47 @@ function tearDownDb(){
     return mongoose.connection.dropDatabase();
 }
 
+describe('Blogposts API resource', function() {
 
+    // each of these hook functions returns a promise
+    // `runServer`, `seedBlogPostData`, `tearDownDb`
+
+    before(function() {
+        return runServer(TEST_DATABASE_URL);
+    });
+    
+    beforeEach(function() {
+        return seedBlogpostData();
+    });
+
+    afterEach(function(){
+        return tearDownDb();
+    })
+
+    after(function(){
+        return closeServer();
+    })
+
+
+    describe('GET endpoint', function(){
+        it('should return all existing blogposts', function(){
+            // strategy: get all restaurants
+            // verify status and data type
+            // prove number restaurants is equal to number in db
+            let blog;
+            return chai.request(app)
+                .get('/posts')
+                .then(function(_blog) {
+                    blog = _blog;
+                    expect(blog).to.have.status(200);
+                    //verify db of posts is more than 1
+                    expect(blog.body.blogposts).to.have.lengthOf.at.least(1);
+                    return BlogPost.count();
+                })
+                .then(function(count) {
+                    expect(blog.body.blogposts).to.have.lengthOf(count);
+                });
+        });
+    });
+
+});
