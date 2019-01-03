@@ -15,3 +15,19 @@ const {TEST_DATABASE_URL} = require('../config.js');
 chai.use(chaiHttp);
 
 // Seed the database using Faker library
+
+
+// generate data to put into database
+
+
+// generate object representing a blog-post
+// can be used to generate seed data for db or request.body data
+
+
+// Delete the database/Teardown
+function tearDownDb(){
+    console.warn('Deleting database');
+    return mongoose.connection.dropDatabase();
+}
+
+
