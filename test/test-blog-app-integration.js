@@ -111,7 +111,7 @@ describe('Blogposts API resource', function() {
                     expect(res).to.be.json;
                     expect(res.body).to.be.a('array');
                     expect(res.body).to.have.lengthOf.at.least(1);
-                    console.log(res.body);
+                   // console.log(res.body[0]);
 
                     res.body.forEach(function(post) {
                         expect(post).to.be.a('object');
@@ -120,11 +120,20 @@ describe('Blogposts API resource', function() {
                     });
                     // set resBlogpost to 1st blogpost in array
                     resBlogpost = res.body[0];
+                   // console.log(resBlogpost);
                     return BlogPost.findById(resBlogpost.id);
                 })
+                // verify the id of the response is the same as the 1st in the db
                 .then(function(post) {
+                     console.log(resBlogpost.author); // this is returning name "meridith riley"
+                     console.log(post.author);  // this is returning an object
                     expect(resBlogpost.id).to.equal(post.id);
-                })
+                    expect(resBlogpost.content).to.equal(post.content);
+                    expect(resBlogpost.title).to.equal(post.title);
+                   // expect(resBlogpost.created).to.equal(post.created); // doing something odd with time encoding
+                  //  expect(resBlogpost.author).to.equal(post.author); // returning string and object
+
+                });
 
         });
 
