@@ -227,6 +227,31 @@ describe('Blogposts API resource', function() {
     });
 
     // Test DELETE Endpoint
+    describe('DELETE endpoint', function() {
+        // Get a blogpost by id
+        // make a DELETE request for that id
+        // assert response code
+        // Verify post with that ID is no longer in the DB
+        it('delete a restaurant by id', function() {
+
+            let blogpost;
+    
+            return BlogPost
+                .findOne()
+                .then(function(_blogpost) {
+                    blogpost = _blogpost;
+                    return chai.request(app).delete(`/posts/${blogpost.id}`);
+                })
+                .then(function(res) {
+                    expect(res).to.have.status(204);
+                    return BlogPost.findById(blogpost.id);
+                })
+                .then(function(_blogpost) {
+                    expect(_blogpost).to.be.null;
+                });
+        });
+
+    });
 
 
 });
