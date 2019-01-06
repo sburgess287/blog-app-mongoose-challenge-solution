@@ -29,12 +29,13 @@ function seedBlogpostData(){
 }
 
 // generate data to put into database
-function generateAuthorName(){
-    return {
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName()
-    }
-}
+// function generateAuthorName(){
+//     return {
+//         firstName: faker.name.firstName(),
+//         lastName: faker.name.lastName()
+
+//     }
+// }
 
 
 // generate object representing a blogpost
@@ -42,11 +43,14 @@ function generateAuthorName(){
 function generateBlogpostData(){
     return {
         title: faker.lorem.words(), 
-        author: generateAuthorName(),
+        author: {
+            firstName: faker.name.firstName(),
+            lastName: faker.name.lastName()
+        },
         content: faker.lorem.text(),
-        comments: {
-            content: faker.lorem.sentences()
-        }
+        // comments: {
+        //     content: faker.lorem.sentences()
+        // }
 
     }
 };
@@ -125,8 +129,8 @@ describe('Blogposts API resource', function() {
                 })
                 // verify the id of the response is the same as the 1st in the db
                 .then(function(post) {
-                     console.log(resBlogpost.author); // this is returning name "meridith riley"
-                     console.log(post.author);  // this is returning an object
+                    // console.log(resBlogpost.author); // this is returning name "meridith riley"
+                    // console.log(post.author);  // this is returning an object
                     expect(resBlogpost.id).to.equal(post.id);
                     expect(resBlogpost.content).to.equal(post.content);
                     expect(resBlogpost.title).to.equal(post.title);
@@ -140,6 +144,48 @@ describe('Blogposts API resource', function() {
     });
 
     // Test POST Endpoint
+    describe('POST endpoint', function() {
+        // make a POST request with data
+        // prove that the blogpost we get back has right keys
+        // and an id is returned as well (indicating it was added to db)
+        it('should add new blogpost', function() {
+            const newPost = {
+                title: faker.lorem.words(), 
+                author: {
+                    firstName: faker.name.firstName(),
+                    lastName: faker.name.lastName()
+                },
+                content: faker.lorem.text(),
+
+            }
+
+            return chai.request(app)
+                .post('/posts')
+                .send(newPost)
+                .then(function(res) {
+                    expect(res).to.have.status(201);
+                    expect(res).to.be.json;
+                    // console.log(res);
+                    expect(res.body).to.be.a('object');
+                    expect(res.body).to.include.keys(
+                    'id', 'author', 'content', 'title', 'created');
+                    expect(res.body.title).to.equal(newPost.title);
+                    expect(res.body.id).to.not.be.null; 
+                    expect(res.body.author).to.equal(
+                        `${newPost.author.firstName} ${newPost.author.lastName}`)
+                    return BlogPost.findById(res.body.id);
+                })
+                .then(function(post) {
+
+                    expect(post.title).to.equal(newPost.title);
+                    expect(post.author.firstName).to.equal(newPost.author.firstName);
+                    expect(post.author.lastName).to.equal(newPost.author.lastName);
+                    expect(post.content).to.equal(newPost.content);
+                })
+                
+        });
+
+    });
 
 
     // Test PUT Endpoint
