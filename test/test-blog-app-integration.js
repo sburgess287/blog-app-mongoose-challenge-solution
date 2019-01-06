@@ -165,7 +165,6 @@ describe('Blogposts API resource', function() {
                 .then(function(res) {
                     expect(res).to.have.status(201);
                     expect(res).to.be.json;
-                    // console.log(res);
                     expect(res.body).to.be.a('object');
                     expect(res.body).to.include.keys(
                     'id', 'author', 'content', 'title', 'created');
@@ -189,6 +188,43 @@ describe('Blogposts API resource', function() {
 
 
     // Test PUT Endpoint
+    describe('PUT endpoint', function() {
+        // get an existing post from db
+        // make PUT request to update the post
+        // verify the response
+        // verify the post in the db is updated correctly
+        it('should update expected fields', function() {
+            const updatePost = {
+                title: "amazingNewPost",
+                author: {
+                    firstName: "Jenny",
+                    lastName: "Smith"
+                },
+                content: "Have a great day!"
+            }
+
+            return BlogPost
+                .findOne()
+                .then(function(post) {
+                    updatePost.id = post.id;
+
+                    // make request and inspect response and data
+                    return chai.request(app)
+                        .put(`/posts/${post.id}`)
+                        .send(updatePost);
+                })
+                .then(function(res) {
+                    expect(res).to.have.status(204);
+                    return BlogPost.findById(updatePost.id);
+                })
+                .then(function(blogpost) {
+                    expect(blogpost.title).to.equal(updatePost.title);
+                    expect(blogpost.author.firstName).to.equal(updatePost.author.firstName);
+                    expect(blogpost.author.lastName).to.equal(updatePost.author.lastName);
+                    expect(blogpost.content).to.equal(updatePost.content);
+                });
+        });
+    });
 
     // Test DELETE Endpoint
 
