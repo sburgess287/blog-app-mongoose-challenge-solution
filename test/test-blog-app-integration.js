@@ -232,7 +232,7 @@ describe('Blogposts API resource', function() {
         // make a DELETE request for that id
         // assert response code
         // Verify post with that ID is no longer in the DB
-        it('delete a restaurant by id', function() {
+        it('deletes a blogpost by id', function() {
 
             let blogpost;
     
