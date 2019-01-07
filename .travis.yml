@@ -7,6 +7,6 @@ deploy:
   edge: true
   api_key:
     secure: OUJ8+H2oA7BDmLOYCm3KbnasfqlhHWmd+iVGbTLsImeXogZdl/Ff+bJy0ppkygt3NJnHlCGJtJB4EAJENxLEPrAjGWzJ0Ddur35JO6/jwwa7NXnQuptMaVlD5sI38tO2pg8Qi4OoMkPFYK0QTl4XpFVYt69W5ptwLxQNXwGTA5KdzcRq5pTuCIaXU9my1XBjXMkGVbCUxm90PzRnMAo/SBsMolB9pX9I03ceE0mDjL7bwQula5wmhmVMmh6YCDcorzA/5xwhlyVCDWa/iC7IjrY3Auk+aLEn2x/dlSd4RZ8Fpv3o240AQzwkPXpfk7pEbxlyRqo8sgEuRjQkQCpD1Poj/ZjUcDkrf8FxVJBvAQGX2KANYGub4f2kv7/ok0dbC0B1ydDEJI3gwuBJCqvM8R3EESYUKONSxFBvK8akv/m8ppFwh85xgWVmmp7Emg21PE2wfdRbPArToAMwCogVB4yoh+8f+8oCFbsMfO0CxUcmxmXbhDqBracO313+Jc5Y76NEz/IEFbDQIGDYwt2VGapOR59cE8guaa0I/Lq27uy7USkELNPLajtWSJJth0eMi4cbjAFIFYGlA077cxBRKX7wt4+KsbXyU/uZsWz9levTgX3Y6GUgnbmLERutxJSgu1Cgs4ibiVexcnkC69Oo0yhivHWLT2E0u9FDOS7gQqo=
-  app: afternoon-temple-11554.herokuapp.com
+  app: afternoon-temple-11554
   on:
     repo: sburgess287/blog-app-mongoose-challenge-solution
