@@ -131,11 +131,13 @@ describe('Blogposts API resource', function() {
                 .then(function(post) {
                     // console.log(resBlogpost.author); // this is returning name "meridith riley"
                     // console.log(post.author);  // this is returning an object
+                    console.log(resBlogpost.author);
+                    console.log(post.author);
                     expect(resBlogpost.id).to.equal(post.id);
                     expect(resBlogpost.content).to.equal(post.content);
                     expect(resBlogpost.title).to.equal(post.title);
-                   // expect(resBlogpost.created).to.equal(post.created); // doing something odd with time encoding
-                  //  expect(resBlogpost.author).to.equal(post.author); // returning string and object
+                    expect(resBlogpost.created).to.equal(post.created.toISOString()); // doing something odd with time encoding
+                   // expect(resBlogpost.author).to.equal(post.author); // returning string and object
 
                 });
 
@@ -170,7 +172,7 @@ describe('Blogposts API resource', function() {
                     'id', 'author', 'content', 'title', 'created');
                     expect(res.body.title).to.equal(newPost.title);
                     expect(res.body.id).to.not.be.null; 
-                    expect(res.body.author).to.equal(
+                    expect(res.body.author).to.equal( // update to authorName
                         `${newPost.author.firstName} ${newPost.author.lastName}`)
                     return BlogPost.findById(res.body.id);
                 })

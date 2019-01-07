@@ -23,6 +23,7 @@ blogPostSchema.methods.serialize = function() {
     
     id: this._id,
     author: this.authorName,
+    //authorName: this.authorName, check this out!  update to use authorName
     content: this.content,
     title: this.title,
     created: this.created
